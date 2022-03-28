@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="data/nga_polbnda_adm1_1m_salb_0.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[4.036546916900042,0.17750899164671008],[14.141622517100055,17.169006482353403]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        function pop_nga_polbnda_adm1_1m_salb_0(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CNTRY_NAME'] !== null ? autolinker.link(feature.properties['CNTRY_NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADM1_NAME'] !== null ? autolinker.link(feature.properties['ADM1_NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['language'] !== null ? autolinker.link(feature.properties['language'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_nga_polbnda_adm1_1m_salb_0_0(feature) {
+            switch(String(feature.properties['language'])) {
+                case 'Hausa':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(149,45,223,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Hausa, Bamana, Gwa, Izere, Labur, Lame, Gubi, Dulbu, Bole':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(204,69,48,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Hausa, Bole':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(123,56,224,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Hausa, Kaningkom-Nindem, Izere':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(29,234,203,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Hausa, Kanuri, Teda, Sara Mbai':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(130,237,81,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Hausa, Kanuri, Zarma, Bole':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(106,176,229,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Hausa, Mbula-Bwazza, Jukun, Bile, Maya':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(105,76,221,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Hausa, Songhai-Koyraboro, Zarma, Dendi, Puku':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(99,180,205,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Ibibio, Eleme, Ebughu, Enwang-Uda, Iko, Ilue, Okobo, Idere, Efai, Oro, Ibuoro, Ekit, Ibuoro, Eket, Ibibio, Obolo, Ibino':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(224,23,73,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Igbo':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(189,208,23,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Igbo, Gbo':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(41,221,86,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Igbo, Idoma':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(206,193,71,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Igbo, Mbembe, Kele, Oring':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(183,210,116,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Ijaw, Abua, Ogbia, Obulom, Odual, Ogbogolo, Ogbronuagum, Ochichi, Kugbo, Abureni, Gokana, Gokana, Khana, Tee, Baan, Obolo':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(175,52,209,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Ijaw, Edo':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(209,25,215,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Ijaw, Edo, Ebira':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(213,140,63,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Ijaw, Ogbia, Odual':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(202,50,146,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Nupe, French, German':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(18,231,156,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Nupe, Hausa, Zarma':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(156,220,87,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Tiv, Ebira, Bassa, Mama':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(64,207,74,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Tiv, Eleme, Ukwa, Usaghade, Eki, Anaang, Efik, Agoi, Kiong, Dorop, Gbo, Nyima, Yigha, Lok??, Lubila, Mbembe, Nkukoli, Olulum??Ik?m, Bakpinka, Uyanga, Akpet, Kele, Ubaghara, Humono, Kalabari, Oring, Umon, Zekwe, Gwune, Doko-Uyanga':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,224,113,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Tiv, Hausa, Izere, Kulere, Bole':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(87,233,153,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Tiv, Idoma, Bassa, Kele, Oring':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(38,198,206,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Tiv, Kulung, Jukun, Uhumkighi':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(228,86,21,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Yoruba':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(132,150,230,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Yoruba, Ewe':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(211,178,95,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Yoruba, Ewe, English':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(30,101,214,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Yoruba, Ijaw, Edo':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(240,81,92,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Yoruba, Nupe, Ebira':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(82,82,233,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Yoruba, Nupe, Idoma, Bassa':
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,58,192,1.0)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_nga_polbnda_adm1_1m_salb_0');
+        map.getPane('pane_nga_polbnda_adm1_1m_salb_0').style.zIndex = 400;
+        map.getPane('pane_nga_polbnda_adm1_1m_salb_0').style['mix-blend-mode'] = 'normal';
+        var layer_nga_polbnda_adm1_1m_salb_0 = new L.geoJson(json_nga_polbnda_adm1_1m_salb_0, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_nga_polbnda_adm1_1m_salb_0',
+            layerName: 'layer_nga_polbnda_adm1_1m_salb_0',
+            pane: 'pane_nga_polbnda_adm1_1m_salb_0',
+            onEachFeature: pop_nga_polbnda_adm1_1m_salb_0,
+            style: style_nga_polbnda_adm1_1m_salb_0_0,
+        });
+        bounds_group.addLayer(layer_nga_polbnda_adm1_1m_salb_0);
+        map.addLayer(layer_nga_polbnda_adm1_1m_salb_0);
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .title += 'Search for a place';
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'nga_polbnda_adm1_1m_salb<br /><table><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_Hausa0.png" /></td><td>Hausa</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_HausaBamanaGwaIzereLaburLameGubiDulbuBole1.png" /></td><td>Hausa, Bamana, Gwa, Izere, Labur, Lame, Gubi, Dulbu, Bole</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_HausaBole2.png" /></td><td>Hausa, Bole</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_HausaKaningkomNindemIzere3.png" /></td><td>Hausa, Kaningkom-Nindem, Izere</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_HausaKanuriTedaSaraMbai4.png" /></td><td>Hausa, Kanuri, Teda, Sara Mbai</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_HausaKanuriZarmaBole5.png" /></td><td>Hausa, Kanuri, Zarma, Bole</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_HausaMbulaBwazzaJukunBileMaya6.png" /></td><td>Hausa, Mbula-Bwazza, Jukun, Bile, Maya</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_HausaSonghaiKoyraboroZarmaDendiPuku7.png" /></td><td>Hausa, Songhai-Koyraboro, Zarma, Dendi, Puku</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_IbibioElemeEbughuEnwangUdaIkoIlueOkoboIdereEfaiOroIbuoroEkitIbuoroEketIbibioOboloIbino8.png" /></td><td>Ibibio, Eleme, Ebughu, Enwang-Uda, Iko, Ilue, Okobo, Idere, Efai, Oro, Ibuoro, Ekit, Ibuoro, Eket, Ibibio, Obolo, Ibino</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_Igbo9.png" /></td><td>Igbo</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_IgboGbo10.png" /></td><td>Igbo, Gbo</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_IgboIdoma11.png" /></td><td>Igbo, Idoma</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_IgboMbembeKeleOring12.png" /></td><td>Igbo, Mbembe, Kele, Oring</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_IjawAbuaOgbiaObulomOdualOgbogoloOgbronuagumOchichiKugboAbureniGokanaGokanaKhanaTeeBaanObolo13.png" /></td><td>Ijaw, Abua, Ogbia, Obulom, Odual, Ogbogolo, Ogbronuagum, Ochichi, Kugbo, Abureni, Gokana, Gokana, Khana, Tee, Baan, Obolo</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_IjawEdo14.png" /></td><td>Ijaw, Edo</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_IjawEdoEbira15.png" /></td><td>Ijaw, Edo, Ebira</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_IjawOgbiaOdual16.png" /></td><td>Ijaw, Ogbia, Odual</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_NupeFrenchGerman17.png" /></td><td>Nupe, French, German</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_NupeHausaZarma18.png" /></td><td>Nupe, Hausa, Zarma</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_TivEbiraBassaMama19.png" /></td><td>Tiv, Ebira, Bassa, Mama</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_TivElemeUkwaUsaghadeEkiAnaangEfikAgoiKiongDoropGboNyimaYighaLokLubilaMbembeNkukoliOlulumIkmBakpinkaUyangaAkpetKeleUbagharaHumonoKalabariOringUmonZekweGwuneDokoUyanga20.png" /></td><td>Tiv, Eleme, Ukwa, Usaghade, Eki, Anaang, Efik, Agoi, Kiong, Dorop, Gbo, Nyima, Yigha, Lok??, Lubila, Mbembe, Nkukoli, Olulum??Ik?m, Bakpinka, Uyanga, Akpet, Kele, Ubaghara, Humono, Kalabari, Oring, Umon, Zekwe, Gwune, Doko-Uyanga</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_TivHausaIzereKulereBole21.png" /></td><td>Tiv, Hausa, Izere, Kulere, Bole</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_TivIdomaBassaKeleOring22.png" /></td><td>Tiv, Idoma, Bassa, Kele, Oring</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_TivKulungJukunUhumkighi23.png" /></td><td>Tiv, Kulung, Jukun, Uhumkighi</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_Yoruba24.png" /></td><td>Yoruba</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_YorubaEwe25.png" /></td><td>Yoruba, Ewe</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_YorubaEweEnglish26.png" /></td><td>Yoruba, Ewe, English</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_YorubaIjawEdo27.png" /></td><td>Yoruba, Ijaw, Edo</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_YorubaNupeEbira28.png" /></td><td>Yoruba, Nupe, Ebira</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_YorubaNupeIdomaBassa29.png" /></td><td>Yoruba, Nupe, Idoma, Bassa</td></tr><tr><td style="text-align: center;"><img src="legend/nga_polbnda_adm1_1m_salb_0_30.png" /></td><td></td></tr></table>': layer_nga_polbnda_adm1_1m_salb_0,}).addTo(map);
+        setBounds();
+        map.addControl(new L.Control.Search({
+            layer: layer_nga_polbnda_adm1_1m_salb_0,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'language'}));
+        document.getElementsByClassName('search-button')[0].className +=
+         ' fa fa-binoculars';
+        </script>
+    </body>
+</html>
